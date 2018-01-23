@@ -172,7 +172,6 @@ if has('gui_running')
     nnoremap <F7> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
     nnoremap <F5> :if &go=~#'L'<Bar>set go-=L<Bar>else<Bar>set go+=L<Bar>endif<CR>
     nnoremap <F8> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
-    set shell="%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe"
   endif
 else
   set term=xterm
