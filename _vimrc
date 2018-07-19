@@ -22,6 +22,7 @@ Plug 'alessandroyorba/alduin'
 Plug 'alessandroyorba/despacio'
 Plug 'nightsense/vim-crunchbang'
 Plug 'nightsense/seabird'
+Plug 'nightsense/seagrey'
 Plug 'reedes/vim-colors-pencil'
 Plug 'joshdick/onedark.vim'
 Plug 'tyrannicaltoucan/vim-deep-space'
@@ -32,6 +33,7 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'Badacadabra/vim-archery'
 Plug 'dracula/vim'
 Plug 'exitface/synthwave.vim'
+Plug 'cocopon/iceberg.vim'
 "Plug 'fneu/breezy'
 "Plug 'gummesson/stereokai.vim'
 "Plug 'altercation/vim-colors-solarized'
@@ -46,15 +48,17 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'guns/xterm-color-table.vim'
-"Plug 'severin-lemaignan/vim-minimap'
+Plug 'severin-lemaignan/vim-minimap'
 "Plug 'Yggdroot/indentLine'
 
 " Editing
 Plug 'lifepillar/vim-mucomplete'
 Plug 'PProvost/vim-ps1'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+"Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
+Plug 'gabrielelana/vim-markdown'
 Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/dbext.vim'
 
@@ -95,11 +99,16 @@ syntax on
 "" Sierra
 let g:sierra_Twilight=1 " Sunset, Twilight, Midnight, Pitch, Nevada
 
+"" Alduin
+"let g:alduin_Shout_Dragon_Aspect = 1
+"let g:alduin_Shout_Become_Ethereal = 1
+let g:alduin_Shout_Fire_Breath = 1
+
 "" Arcadia
 let g:arcadia_Twilight=1 " Sunset, Twilight, Midnight, Pitch, Nevada
 
 "" Gruvbox
-let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_invert_indent_guides=0
 let g:gruvbox_bold=1
 let g:gruvbox_italic=1
@@ -141,16 +150,19 @@ let &colorcolumn=join(range(120,999),",")
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_tab_guides = 0
+let g:indent_guides_start_level = 1
+
+hi IndentGuidesOdd  guibg=red   ctermbg=3
+hi IndentGuidesEven guibg=green ctermbg=4
 
 
 "------------------------------------------------------------
 " Interface settings
 
-if (has("termguicolors"))
-  set termguicolors " 24bit truecolors
-endif
-
 if has('gui_running')
+  if (has('termguicolors'))
+    set termguicolors " 24bit truecolors
+  endif
   set guioptions-=m  " remove menu bar
   set guioptions-=T  " remove toolbar
   set guioptions-=r  " remove right-hand scroll bar
@@ -158,14 +170,14 @@ if has('gui_running')
   set lines=40 columns=150
 
   set background=dark
-  colorscheme deus
+  colorscheme gruvbox
 
   if has('gui_win32')
     set guifontwide=D2Coding:h10:cDEFAULT
     "set guifont=Ubuntu\ Mono:h12 linespace=0
     "set guifont=Terminus:h12 linespace=0
     set guifont=Hack:h10:cANSI linespace=1
-    map <F2> <Esc>:set guifont=Ubuntu\ Mono\ derivative\ Powerline:h12:cANSI linespace=0<CR>
+    map <F2> <Esc>:set guifont=Ubuntu\ Mono:h12:cANSI linespace=0<CR>
     map <F3> <Esc>:set guifont=Terminus:h12:cANSI linespace=0<CR>
     map <F4> <Esc>:set guifont=Hack:h10:cANSI linespace=1<CR>
     nnoremap <F6> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
@@ -173,17 +185,27 @@ if has('gui_running')
     nnoremap <F5> :if &go=~#'L'<Bar>set go-=L<Bar>else<Bar>set go+=L<Bar>endif<CR>
     nnoremap <F8> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
   endif
+  " Language
+  " Options are not possible for windows. rename $VIMRUNTIME/lang directory.
+  set langmenu=en_US.UTF-8
+  let $LANG='en_US.UTF-8'
+  let $LC_ALL='en_US.UTF-8'
 else
-  set term=xterm
+  set term=win32 " amiga, beos-ansi, ansi, pcansi, win32, vt320, vt52, xterm, iris-ansi, debug, dumb
   set t_Co=256
   set background=dark
-  colorscheme turtles
+  colorscheme alduin
 
-  let &t_AB="\e[48;5;%dm"
-  let &t_AF="\e[38;5;%dm"
+  let $LANG="ko.UTF-8"
+
+  "let &t_AB="\e[48;5;%dm"
+  "let &t_AF="\e[38;5;%dm"
   inoremap <Char-0x07F> <BS>
   nnoremap <Char-0x07F> <BS>
 endif
+
+" Switch to english when command mode
+set noimd
 
 " NERDTree
 let NERDTreeMinimalUI = 0
@@ -194,6 +216,12 @@ let g:NERDTreeChDirMode = 2
 "let g:NERDTreeDirArrowExpandable = "\u25BC"
 "let g:NERDTreeDirArrowCollapsible = "\u25B6"
 
+" ctrlP
+" 'c' - the directory of the current file.
+" 'r' - the nearest ancestor that contains one of these directories or files: .git .hg .svn .bzr
+" 'a' - like c, but only if the current working directory outside of CtrlP is not a direct ancestor of the directory of the current file.
+" 0 or '' (empty string) - disable this feature.
+let g:ctrlp_working_path_mode = 'w'
 
 "------------------------------------------------------------
 " Language specifics
@@ -201,28 +229,29 @@ let g:NERDTreeChDirMode = 2
 set encoding=utf-8
 set fileencoding=utf-8
 
-" Language
-" Options are not possible for windows. rename $VIMRUNTIME/lang directory.
-set noimd
-"set langmenu=en_US.UTF-8
-"let $LANG='en_US.UTF-8'
-"let $LC_ALL='en_US.UTF-8'
-"source $VIMRUNTIME/delmenu.vim
-"source $VIMRUNTIME/menu.vim
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
 
 
 "------------------------------------------------------------
 " Airline settings
 
+" Let vim do not show mode
+set noshowmode
+
 " Theme
-let g:airline_theme='term'
-let g:airline_powerline_fonts = 1
+let g:airline_theme='ayu_mirage'
+if has('gui_running')
+  let g:airline_powerline_fonts = 1
+else
+  let g:airline_powerline_fonts = 0
+endif
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tab_type = 1
 let g:airline_detect_modified=1
-"let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 "let g:airline#extensions#tabline#show_buffers = 1
 "let g:airline#extensions#tabline#show_splits = 1
 
@@ -412,10 +441,11 @@ nnoremap <C-L> :nohl<CR><C-L>
 "
 " Markdown editing
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-let g:vim_markdown_folding_disabled = 1
 let g:markdown_enable_spell_checking = 0
-let g:vim_markdown_new_list_item_indent = 2
-let g:vim_markdown_conceal = 0
+let g:markdown_enable_conceal = 0
+let g:markdown_enable_input_abbreviations = 0
+"let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_new_list_item_indent = 2
 "let g:markdown_fenced_lanuages = ['sql']
 
 " Python editing
@@ -424,29 +454,8 @@ au BufNewFile,BufFilePre,BufRead *.py set tabstop=4 | set softtabstop=4 | set sh
 " NERDTree or Netrw settings
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree D:\works-db | endif
-map <C-Bslash> :NERDTreeToggle<CR>
+map <C-\> :NERDTreeToggle<CR>
 
 " Remove trailing whitespace when write file
 autocmd BufWritePre * %s/\s\+$//e
 
-" vim 정규표현식으로 Markdown 을 Confluence wiki markup 으로 변환하기
-function! MarkdownToWiki()
-    execute '%s%^- %* %Ig'
-    execute '%s%^  - %  ** %Ig'
-    execute '%s%^    - %    *** %Ig'
-    execute '%s%^      - %      **** %Ig'
-    execute '%s%^        - %        ***** %Ig'
-    execute '%s%^          - %          ****** %Ig'
-    execute '%s%^            - %            ******* %Ig'
-    execute '%s%^# %h1. %Ig'
-    execute '%s%^## %h2. %Ig'
-    execute '%s%^### %h3. %Ig'
-    execute '%s%^#### %h4. %Ig'
-    execute '%s%^##### %h5. %Ig'
-    execute '%s%^###### %h6. %Ig'
-    " replace [title](url) with [title|url]
-    execute '%s%\v\[([^]]+)\]\(([^)]+)\)%[\1|\2]%Ig'
-    " https://confluence.atlassian.com/display/DOC/Confluence+Wiki+Markup#ConfluenceWikiMarkup-images
-    execute '%s%\v\<img src\=\"([^"]+)\"[^>]*\>%!\1!%Ig'
-endfunction
-command! MarkdownToWiki call MarkdownToWiki()
