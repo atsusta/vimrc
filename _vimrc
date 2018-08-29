@@ -49,8 +49,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'guns/xterm-color-table.vim'
 Plug 'severin-lemaignan/vim-minimap'
+"Plug 'RRethy/vim-illuminate'
+"Plug 'guns/xterm-color-table.vim'
 "Plug 'Yggdroot/indentLine'
 
 " Editing
@@ -61,6 +62,7 @@ Plug 'PProvost/vim-ps1'
 Plug 'gabrielelana/vim-markdown'
 Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/dbext.vim'
+
 
 call plug#end()
 
@@ -108,7 +110,7 @@ let g:alduin_Shout_Fire_Breath = 1
 let g:arcadia_Twilight=1 " Sunset, Twilight, Midnight, Pitch, Nevada
 
 "" Gruvbox
-let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_dark='medium' " light, medium, hard
 let g:gruvbox_invert_indent_guides=0
 let g:gruvbox_bold=1
 let g:gruvbox_italic=1
@@ -159,6 +161,25 @@ hi IndentGuidesEven guibg=green ctermbg=4
 "------------------------------------------------------------
 " Interface settings
 
+" Switch to english when command mode
+set noimd
+
+" NERDTree
+let NERDTreeMinimalUI = 0
+let NERDTreeDirArrows = 1
+let NERDTreeQuitOnOpen = 0
+let NERDTreeShowBookmarks = 1
+let g:NERDTreeChDirMode = 2
+"let g:NERDTreeDirArrowExpandable = "\u25BC"
+"let g:NERDTreeDirArrowCollapsible = "\u25B6"
+
+" ctrlP
+" 'c' - the directory of the current file.
+" 'r' - the nearest ancestor that contains one of these directories or files: .git .hg .svn .bzr
+" 'a' - like c, but only if the current working directory outside of CtrlP is not a direct ancestor of the directory of the current file.
+" 0 or '' (empty string) - disable this feature.
+let g:ctrlp_working_path_mode = 'w'
+
 if has('gui_running')
   if (has('termguicolors'))
     set termguicolors " 24bit truecolors
@@ -185,16 +206,21 @@ if has('gui_running')
     nnoremap <F5> :if &go=~#'L'<Bar>set go-=L<Bar>else<Bar>set go+=L<Bar>endif<CR>
     nnoremap <F8> :if &go=~#'r'<Bar>set go-=r<Bar>else<Bar>set go+=r<Bar>endif<CR>
   endif
+
   " Language
   " Options are not possible for windows. rename $VIMRUNTIME/lang directory.
   set langmenu=en_US.UTF-8
   let $LANG='en_US.UTF-8'
   let $LC_ALL='en_US.UTF-8'
+
 else
   set term=win32 " amiga, beos-ansi, ansi, pcansi, win32, vt320, vt52, xterm, iris-ansi, debug, dumb
+  if exists("$SHELL")
+    set term=xterm-color
+  endif
   set t_Co=256
   set background=dark
-  colorscheme alduin
+  colorscheme archery
 
   let $LANG="ko.UTF-8"
 
@@ -204,24 +230,6 @@ else
   nnoremap <Char-0x07F> <BS>
 endif
 
-" Switch to english when command mode
-set noimd
-
-" NERDTree
-let NERDTreeMinimalUI = 0
-let NERDTreeDirArrows = 1
-let NERDTreeQuitOnOpen = 0
-let NERDTreeShowBookmarks = 1
-let g:NERDTreeChDirMode = 2
-"let g:NERDTreeDirArrowExpandable = "\u25BC"
-"let g:NERDTreeDirArrowCollapsible = "\u25B6"
-
-" ctrlP
-" 'c' - the directory of the current file.
-" 'r' - the nearest ancestor that contains one of these directories or files: .git .hg .svn .bzr
-" 'a' - like c, but only if the current working directory outside of CtrlP is not a direct ancestor of the directory of the current file.
-" 0 or '' (empty string) - disable this feature.
-let g:ctrlp_working_path_mode = 'w'
 
 "------------------------------------------------------------
 " Language specifics
@@ -451,6 +459,9 @@ let g:markdown_enable_input_abbreviations = 0
 " Python editing
 au BufNewFile,BufFilePre,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set fileformat=unix
 
+" configuration file editing
+au BufNewFile,BufRead *.cnf set syntax=conf
+
 " NERDTree or Netrw settings
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree D:\works-db | endif
@@ -459,3 +470,11 @@ map <C-\> :NERDTreeToggle<CR>
 " Remove trailing whitespace when write file
 autocmd BufWritePre * %s/\s\+$//e
 
+" Copy search hits
+function! CopyMatches(reg)
+  let hits = []
+  %s//\=len(add(hits, submatch(0))) ? submatch(0) : ''/gne
+  let reg = empty(a:reg) ? '+' : a:reg
+  execute 'let @'.reg.' = join(hits, "\n") . "\n"'
+endfunction
+command! -register CopyMatches call CopyMatches(<q-reg>)
