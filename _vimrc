@@ -8,32 +8,32 @@ call plug#begin('~/vimfiles/plugged')
 " Color themes
 Plug 'morhetz/gruvbox'
 Plug 'ajmwagar/vim-deus'
-Plug 'rhysd/vim-color-spring-night'
 Plug 'roosta/srcery'
-Plug 'YorickPeterse/happy_hacking.vim'
-Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'rakr/vim-two-firewatch'
-Plug 'whatyouhide/vim-gotham'
-Plug 'davidklsn/vim-sialoquent'
-Plug 'raphamorim/lucario'
-Plug 'alessandroyorba/sierra'
-Plug 'AlessandroYorba/Arcadia'
-Plug 'alessandroyorba/alduin'
-Plug 'alessandroyorba/despacio'
-Plug 'nightsense/vim-crunchbang'
-Plug 'nightsense/seabird'
-Plug 'nightsense/seagrey'
 Plug 'reedes/vim-colors-pencil'
 Plug 'joshdick/onedark.vim'
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'ayu-theme/ayu-vim'
-Plug 'beigebrucewayne/Turtles'
-Plug 'jansenfuller/crayon'
 Plug 'liuchengxu/space-vim-dark'
-Plug 'Badacadabra/vim-archery'
 Plug 'dracula/vim'
 Plug 'exitface/synthwave.vim'
-Plug 'cocopon/iceberg.vim'
+"Plug 'Badacadabra/vim-archery'
+"Plug 'alessandroyorba/sierra'
+"Plug 'rhysd/vim-color-spring-night'
+"Plug 'YorickPeterse/happy_hacking.vim'
+"Plug 'kristijanhusak/vim-hybrid-material'
+"Plug 'rakr/vim-two-firewatch'
+"Plug 'whatyouhide/vim-gotham'
+"Plug 'davidklsn/vim-sialoquent'
+"Plug 'raphamorim/lucario'
+"Plug 'AlessandroYorba/Arcadia'
+"Plug 'alessandroyorba/alduin'
+"Plug 'alessandroyorba/despacio'
+"Plug 'nightsense/vim-crunchbang'
+"Plug 'nightsense/seabird'
+"Plug 'nightsense/seagrey'
+"Plug 'tyrannicaltoucan/vim-deep-space'
+"Plug 'ayu-theme/ayu-vim'
+"Plug 'beigebrucewayne/Turtles'
+"Plug 'jansenfuller/crayon'
+"Plug 'cocopon/iceberg.vim'
 "Plug 'fneu/breezy'
 "Plug 'gummesson/stereokai.vim'
 "Plug 'altercation/vim-colors-solarized'
@@ -57,11 +57,11 @@ Plug 'severin-lemaignan/vim-minimap'
 " Editing
 Plug 'lifepillar/vim-mucomplete'
 Plug 'PProvost/vim-ps1'
-"Plug 'godlygeek/tabular'
-"Plug 'plasticboy/vim-markdown'
 Plug 'gabrielelana/vim-markdown'
 Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/dbext.vim'
+"Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
 
 
 call plug#end()
@@ -98,17 +98,6 @@ syntax on
 "------------------------------------------------------------
 " Color schemes
 
-"" Sierra
-let g:sierra_Twilight=1 " Sunset, Twilight, Midnight, Pitch, Nevada
-
-"" Alduin
-"let g:alduin_Shout_Dragon_Aspect = 1
-"let g:alduin_Shout_Become_Ethereal = 1
-let g:alduin_Shout_Fire_Breath = 1
-
-"" Arcadia
-let g:arcadia_Twilight=1 " Sunset, Twilight, Midnight, Pitch, Nevada
-
 "" Gruvbox
 let g:gruvbox_contrast_dark='medium' " light, medium, hard
 let g:gruvbox_invert_indent_guides=0
@@ -119,23 +108,6 @@ let g:gruvbox_italic=1
 let g:srcery_bold=1
 let g:srcery_underline=1
 let g:srcery_italic=1
-
-"" Solarized
-let g:solarized_bold=1
-let g:solarized_underline=1
-let g:solarized_italic=1
-
-"" Spring-night
-let g:spring_night_kill_italic=0
-
-"" Hybrid-material
-let g:enable_bold_font = 1
-
-"" Ayu
-let ayucolor="mirage" " light, mirage, dark
-
-"" Pencil
-let g:pencil_terminal_italics = 1
 
 "" space-vim-dark
 let g:space_vim_dark_background = 235 " default: 234 (range: 233 ~ 238)
@@ -191,7 +163,7 @@ if has('gui_running')
   set lines=40 columns=150
 
   set background=dark
-  colorscheme gruvbox
+  colorscheme dracula
 
   if has('gui_win32')
     set guifontwide=D2Coding:h10:cDEFAULT
@@ -216,7 +188,7 @@ if has('gui_running')
 else
   set term=win32 " amiga, beos-ansi, ansi, pcansi, win32, vt320, vt52, xterm, iris-ansi, debug, dumb
   if exists("$SHELL")
-    set term=xterm-color
+    set term=xterm-256color
   endif
   set t_Co=256
   set background=dark
@@ -248,7 +220,7 @@ source $VIMRUNTIME/menu.vim
 set noshowmode
 
 " Theme
-let g:airline_theme='ayu_mirage'
+let g:airline_theme='synthwave'
 if has('gui_running')
   let g:airline_powerline_fonts = 1
 else
