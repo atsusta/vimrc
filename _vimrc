@@ -14,6 +14,9 @@ Plug 'joshdick/onedark.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'dracula/vim'
 Plug 'exitface/synthwave.vim'
+Plug 'NLKNguyen/papercolor-theme'
+"Plug 'koirand/tokyo-metro.vim'
+"Plug 'cseelus/vim-colors-lucid'
 "Plug 'Badacadabra/vim-archery'
 "Plug 'alessandroyorba/sierra'
 "Plug 'rhysd/vim-color-spring-night'
@@ -50,6 +53,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'severin-lemaignan/vim-minimap'
+"Plug 'airblade/vim-gitgutter'
 "Plug 'RRethy/vim-illuminate'
 "Plug 'guns/xterm-color-table.vim'
 "Plug 'Yggdroot/indentLine'
@@ -59,7 +63,7 @@ Plug 'lifepillar/vim-mucomplete'
 Plug 'PProvost/vim-ps1'
 Plug 'gabrielelana/vim-markdown'
 Plug 'sjl/gundo.vim'
-Plug 'vim-scripts/dbext.vim'
+"Plug 'vim-scripts/dbext.vim'
 "Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 
@@ -111,6 +115,17 @@ let g:srcery_italic=1
 
 "" space-vim-dark
 let g:space_vim_dark_background = 235 " default: 234 (range: 233 ~ 238)
+
+"" PaperColor
+let g:PaperColor_Theme_Options = {
+  \   'theme': {
+  \     'default': {
+  \       'transparent_background': 0,
+  \       'allow_bold': 1,
+  \       'allow_italic': 1
+  \     }
+  \   }
+  \ }
 
 " Show color column as area, not line
 set colorcolumn=120
@@ -186,15 +201,17 @@ if has('gui_running')
   let $LC_ALL='en_US.UTF-8'
 
 else
-  set term=win32 " amiga, beos-ansi, ansi, pcansi, win32, vt320, vt52, xterm, iris-ansi, debug, dumb
+  " term: amiga, beos-ansi, ansi, pcansi, win32, vt320, vt52, xterm, iris-ansi, debug, dumb
   if exists("$SHELL")
     set term=xterm-256color
+  else
+    set term=win32
   endif
   set t_Co=256
-  set background=dark
-  colorscheme archery
+  set background=light
+  colorscheme PaperColor
 
-  let $LANG="ko.UTF-8"
+  let $LANG="en_US.UTF-8"
 
   "let &t_AB="\e[48;5;%dm"
   "let &t_AF="\e[38;5;%dm"
@@ -220,7 +237,7 @@ source $VIMRUNTIME/menu.vim
 set noshowmode
 
 " Theme
-let g:airline_theme='synthwave'
+let g:airline_theme='night_owl'
 if has('gui_running')
   let g:airline_powerline_fonts = 1
 else
@@ -424,7 +441,7 @@ au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_conceal = 0
 let g:markdown_enable_input_abbreviations = 0
-"let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_folding_disabled = 1
 "let g:vim_markdown_new_list_item_indent = 2
 "let g:markdown_fenced_lanuages = ['sql']
 
