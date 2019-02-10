@@ -1,0 +1,33 @@
+# .bashrc
+# Append to your .bashrc
+
+# ...(General contents)...
+
+# User specific aliases and functions
+git_branch() {
+  git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/\1/"
+}
+
+git_status() {
+  local message=''
+  if [ ! -z "$(git status | grep 'to be committed')" ]; then
+    message+=$(git status -s 2> /dev/null | grep 'A\|M\|D' | wc -l | awk '{print "●"$1" "}') # staged file
+  fi
+  if [ ! -z "$(git status | grep 'not staged')" ]; then
+    message+=$(git status -s 2> /dev/null | grep 'A\|M\|D' | wc -l | awk '{print "✚"$1" "}') # unstaged file
+  fi
+  if [ ! -z "$(git status | grep 'Untracked')" ]; then
+    message+=$(git status -s 2> /dev/null | grep '^??' | wc -l | awk '{print "…"$1" "}') # untracked file
+  fi
+  echo $message
+}
+
+git_print() {
+  if [ -z "$(git status 2> /dev/null)" ]; then return; fi
+  echo -e " [$(git_branch)|$(git_status)] "
+}
+
+export PS1="\D{%T} \[\e[1;38;5;197m\]\u\[\e[0m\]@\[\e[1;38;5;190m\]\h\[\e[0m\] \W\[\e[38;5;158m\]\$(git_print)\[\e[0m\]$ "
+export PS2="\D{%T} \[\e[1;38;5;197m\]\u\[\e[0m\]@\[\e[1;38;5;190m\]\h\[\e[0m\] \W\$ "
+
+export TERM=xterm-256color
