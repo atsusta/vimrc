@@ -8,13 +8,15 @@ call plug#begin('~/vimfiles/plugged')
 " Color themes
 Plug 'morhetz/gruvbox'
 Plug 'ajmwagar/vim-deus'
-Plug 'roosta/srcery'
+Plug 'srcery-colors/srcery-vim'
 Plug 'reedes/vim-colors-pencil'
 Plug 'joshdick/onedark.vim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'dracula/vim'
 Plug 'exitface/synthwave.vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'Nequo/vim-allomancer'
+Plug 'fcpg/vim-farout'
 "Plug 'koirand/tokyo-metro.vim'
 "Plug 'cseelus/vim-colors-lucid'
 "Plug 'Badacadabra/vim-archery'
@@ -53,6 +55,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'severin-lemaignan/vim-minimap'
+Plug 'terryma/vim-smooth-scroll'
 "Plug 'airblade/vim-gitgutter'
 "Plug 'RRethy/vim-illuminate'
 "Plug 'guns/xterm-color-table.vim'
@@ -63,7 +66,7 @@ Plug 'lifepillar/vim-mucomplete'
 Plug 'PProvost/vim-ps1'
 Plug 'gabrielelana/vim-markdown'
 Plug 'sjl/gundo.vim'
-"Plug 'vim-scripts/dbext.vim'
+Plug 'vim-scripts/dbext.vim'
 "Plug 'godlygeek/tabular'
 "Plug 'plasticboy/vim-markdown'
 
@@ -112,6 +115,8 @@ let g:gruvbox_italic=1
 let g:srcery_bold=1
 let g:srcery_underline=1
 let g:srcery_italic=1
+let g:srcery_inverse_matches=1
+let g:srcery_undercurl=1
 
 "" space-vim-dark
 let g:space_vim_dark_background = 235 " default: 234 (range: 233 ~ 238)
@@ -178,14 +183,15 @@ if has('gui_running')
   set lines=40 columns=150
 
   set background=dark
-  colorscheme dracula
+  colorscheme srcery
+  autocmd BufEnter * if expand("%:p:h") !~ 'D:\works-db' | colorscheme farout | endif
 
   if has('gui_win32')
     set guifontwide=D2Coding:h10:cDEFAULT
     "set guifont=Ubuntu\ Mono:h12 linespace=0
     "set guifont=Terminus:h12 linespace=0
-    set guifont=Hack:h10:cANSI linespace=1
-    map <F2> <Esc>:set guifont=Ubuntu\ Mono:h12:cANSI linespace=0<CR>
+    set guifont=Iosevka:h10:cANSI linespace=1
+    map <F2> <Esc>:set guifont=Iosevka:h10:cANSI linespace=0<CR>
     map <F3> <Esc>:set guifont=Terminus:h12:cANSI linespace=0<CR>
     map <F4> <Esc>:set guifont=Hack:h10:cANSI linespace=1<CR>
     nnoremap <F6> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
@@ -208,7 +214,7 @@ else
     set term=win32
   endif
   set t_Co=256
-  set background=light
+  set background=dark
   colorscheme PaperColor
 
   let $LANG="en_US.UTF-8"
@@ -237,7 +243,7 @@ source $VIMRUNTIME/menu.vim
 set noshowmode
 
 " Theme
-let g:airline_theme='night_owl'
+let g:airline_theme='solarized_flood'
 if has('gui_running')
   let g:airline_powerline_fonts = 1
 else
@@ -269,10 +275,18 @@ nmap <leader>^ :bfirst<CR>
 nmap <leader>$ :blast<CR>
 
 " Tabs
-nmap <leader>T :tabnew<CR>
+nmap <leader>t :tabnew<CR>
 nmap <leader>L :tabnext<CR>
 nmap <leader>H :tabprevious<CR>
 nmap <leader>X :tabclose<CR>
+
+
+"------------------------------------------------------------
+" Smooth scroll
+" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 
 "------------------------------------------------------------
@@ -384,8 +398,8 @@ set number
 " Quickly time out on keycodes, but never time out on mappings
 set notimeout ttimeout ttimeoutlen=200
 
-" Use <F11> to toggle between 'paste' and 'nopaste'
-set pastetoggle=<F11>
+" Use <F12> to toggle between 'paste' and 'nopaste'
+set pastetoggle=<F12>
 
 " Line wrapping
 set wrap
@@ -448,8 +462,10 @@ let g:vim_markdown_folding_disabled = 1
 " Python editing
 au BufNewFile,BufFilePre,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set fileformat=unix
 
-" configuration file editing
+" Miscellaneous
 au BufNewFile,BufRead *.cnf set syntax=conf
+au BufNewFile,BufRead *.err set syntax=messages
+au BufNewFile,BufRead *.pwsh set syntax=ps1
 
 " NERDTree or Netrw settings
 autocmd StdinReadPre * let s:std_in=1
