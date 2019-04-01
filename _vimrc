@@ -184,7 +184,7 @@ if has('gui_running')
 
   set background=dark
   colorscheme srcery
-  autocmd BufEnter * if expand("%:p:h") !~ 'D:\works-db' | colorscheme farout | endif
+  autocmd VimEnter * if argc() != 0 || exists("s:std_in") | colorscheme farout | endif
 
   if has('gui_win32')
     set guifontwide=D2Coding:h10:cDEFAULT
