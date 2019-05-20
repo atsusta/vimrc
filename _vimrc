@@ -56,6 +56,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'terryma/vim-smooth-scroll'
+Plug 'mhinz/vim-signify'
 "Plug 'airblade/vim-gitgutter'
 "Plug 'RRethy/vim-illuminate'
 "Plug 'guns/xterm-color-table.vim'
@@ -170,7 +171,7 @@ let g:NERDTreeChDirMode = 2
 " 'r' - the nearest ancestor that contains one of these directories or files: .git .hg .svn .bzr
 " 'a' - like c, but only if the current working directory outside of CtrlP is not a direct ancestor of the directory of the current file.
 " 0 or '' (empty string) - disable this feature.
-let g:ctrlp_working_path_mode = 'w'
+let g:ctrlp_working_path_mode = 'a'
 
 if has('gui_running')
   if (has('termguicolors'))
@@ -184,7 +185,9 @@ if has('gui_running')
 
   set background=dark
   colorscheme srcery
-  autocmd VimEnter * if argc() != 0 || exists("s:std_in") | colorscheme farout | endif
+  autocmd VimEnter * if argc() != 0 || exists("s:std_in")
+        \ | colorscheme farout | AirlineTheme alduin
+        \ | endif
 
   if has('gui_win32')
     set guifontwide=D2Coding:h10:cDEFAULT
@@ -210,9 +213,14 @@ else
   " term: amiga, beos-ansi, ansi, pcansi, win32, vt320, vt52, xterm, iris-ansi, debug, dumb
   if exists("$SHELL")
     set term=xterm-256color
-  else
-    set term=win32
   endif
+
+  " Hyper™ and git for windows
+  au BufNew,BufNewFile &shell=sh
+        \ set term=xterm
+  au BufNew,BufNewFile &shell=C:\Windows\system32\cmd.exe
+        \ set term=win32
+
   set t_Co=256
   set background=dark
   colorscheme PaperColor
@@ -243,7 +251,7 @@ source $VIMRUNTIME/menu.vim
 set noshowmode
 
 " Theme
-let g:airline_theme='solarized_flood'
+let g:airline_theme='base16_adwaita'
 if has('gui_running')
   let g:airline_powerline_fonts = 1
 else
@@ -460,7 +468,12 @@ let g:vim_markdown_folding_disabled = 1
 "let g:markdown_fenced_lanuages = ['sql']
 
 " Python editing
-au BufNewFile,BufFilePre,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set fileformat=unix
+au BufNewFile,BufFilePre,BufRead *.py
+      \ set tabstop=4
+      \ | set softtabstop=4
+      \ | set shiftwidth=4
+      \ | set textwidth=79
+      \ | set fileformat=unix
 
 " Miscellaneous
 au BufNewFile,BufRead *.cnf set syntax=conf
