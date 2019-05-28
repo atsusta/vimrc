@@ -3,7 +3,14 @@
 " vim-plug
 " URL: https://github.com/junegunn/vim-plug
 " hit :PlugInstall when first use
-call plug#begin('~/vimfiles/plugged')
+
+let plugpath='~/.vim/plugged'
+
+if (&shell=='C:\Windows\system32\cmd.exe')
+  let plugpath='~/vimfiles/plugged'
+endif
+
+silent! call plug#begin(plugpath)
 
 " Color themes
 Plug 'morhetz/gruvbox'
@@ -252,11 +259,11 @@ set noshowmode
 
 " Theme
 let g:airline_theme='base16_adwaita'
-if has('gui_running')
+"if has('gui_running')
   let g:airline_powerline_fonts = 1
-else
-  let g:airline_powerline_fonts = 0
-endif
+"else
+"  let g:airline_powerline_fonts = 0
+"endif
 
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -496,3 +503,4 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
+
