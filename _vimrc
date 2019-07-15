@@ -26,9 +26,9 @@ Plug 'Nequo/vim-allomancer'
 Plug 'fcpg/vim-farout'
 "Plug 'koirand/tokyo-metro.vim'
 "Plug 'cseelus/vim-colors-lucid'
-"Plug 'Badacadabra/vim-archery'
+Plug 'Badacadabra/vim-archery'
 "Plug 'alessandroyorba/sierra'
-"Plug 'rhysd/vim-color-spring-night'
+Plug 'rhysd/vim-color-spring-night'
 "Plug 'YorickPeterse/happy_hacking.vim'
 "Plug 'kristijanhusak/vim-hybrid-material'
 "Plug 'rakr/vim-two-firewatch'
@@ -45,7 +45,7 @@ Plug 'fcpg/vim-farout'
 "Plug 'ayu-theme/ayu-vim'
 "Plug 'beigebrucewayne/Turtles'
 "Plug 'jansenfuller/crayon'
-"Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/iceberg.vim'
 "Plug 'fneu/breezy'
 "Plug 'gummesson/stereokai.vim'
 "Plug 'altercation/vim-colors-solarized'
@@ -193,7 +193,7 @@ if has('gui_running')
   set background=dark
   colorscheme srcery
   autocmd VimEnter * if argc() != 0 || exists("s:std_in")
-        \ | colorscheme farout | AirlineTheme alduin
+        \ | colorscheme farout | AirlineTheme random
         \ | endif
 
   if has('gui_win32')
@@ -258,7 +258,7 @@ source $VIMRUNTIME/menu.vim
 set noshowmode
 
 " Theme
-let g:airline_theme='base16_adwaita'
+let g:airline_theme='random'
 "if has('gui_running')
   let g:airline_powerline_fonts = 1
 "else
@@ -486,9 +486,17 @@ au BufNewFile,BufFilePre,BufRead *.py
 au BufNewFile,BufRead *.cnf set syntax=conf
 au BufNewFile,BufRead *.err set syntax=messages
 au BufNewFile,BufRead *.pwsh set syntax=ps1
+au BufNewFile,BufRead *.sql.txt set syntax=sql
 
 " NERDTree or Netrw settings
 autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\personnel\wid.md | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\tips\tips-devops.md | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\tips\tips-linux.md | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\tips\tips-mysql.md | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\tips\tips-nmb.md | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\tips\tips-sqlserver.md | endif
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | edit D:\works-db\tips\tips.md | endif
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree D:\works-db | endif
 map <C-\> :NERDTreeToggle<CR>
 
