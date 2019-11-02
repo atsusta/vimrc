@@ -6,7 +6,7 @@
 
 let plugpath='~/.vim/plugged'
 
-if (&shell=='C:\Windows\system32\cmd.exe')
+if (&shell=='C:\WINDOWS\system32\cmd.exe')
   let plugpath='~/vimfiles/plugged'
 endif
 
