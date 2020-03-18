@@ -54,6 +54,7 @@ Plug 'cocopon/iceberg.vim'
 "Plug 'alessandroyorba/monrovia'
 "Plug 'alessandroyorba/sidonia'
 "Plug 'chmllr/elrodeo-vim-colorscheme'
+Plug 'relastle/bluewery.vim'
 
 " Interface
 Plug 'nathanaelkane/vim-indent-guides'
@@ -64,6 +65,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'severin-lemaignan/vim-minimap'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'mhinz/vim-signify'
+"Plug 'mg979/vim-xtabline'
 "Plug 'airblade/vim-gitgutter'
 "Plug 'RRethy/vim-illuminate'
 "Plug 'guns/xterm-color-table.vim'
@@ -114,7 +116,7 @@ syntax on
 " Color schemes
 
 "" Gruvbox
-let g:gruvbox_contrast_dark='medium' " light, medium, hard
+let g:gruvbox_contrast_dark='hard' " light, medium, hard
 let g:gruvbox_invert_indent_guides=0
 let g:gruvbox_bold=1
 let g:gruvbox_italic=1
@@ -193,7 +195,7 @@ if has('gui_running')
   set background=dark
   colorscheme srcery
   autocmd VimEnter * if argc() != 0 || exists("s:std_in")
-        \ | colorscheme farout | AirlineTheme random
+        \ | colorscheme dracula | AirlineTheme random
         \ | endif
 
   if has('gui_win32')
@@ -202,8 +204,8 @@ if has('gui_running')
     "set guifont=Terminus:h12 linespace=0
     set guifont=Iosevka:h10:cANSI linespace=1
     map <F2> <Esc>:set guifont=Iosevka:h10:cANSI linespace=0<CR>
-    map <F3> <Esc>:set guifont=Terminus:h12:cANSI linespace=0<CR>
-    map <F4> <Esc>:set guifont=Hack:h10:cANSI linespace=1<CR>
+    map <F3> <Esc>:set guifont=JetBrains\ Mono:h10:cANSI linespace=0<CR>
+    map <F4> <Esc>:set guifont=Hack:h10:cANSI linespace=2<CR>
     nnoremap <F6> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
     nnoremap <F7> :if &go=~#'T'<Bar>set go-=T<Bar>else<Bar>set go+=T<Bar>endif<CR>
     nnoremap <F5> :if &go=~#'L'<Bar>set go-=L<Bar>else<Bar>set go+=L<Bar>endif<CR>
@@ -230,7 +232,7 @@ else
 
   set t_Co=256
   set background=dark
-  colorscheme PaperColor
+  colorscheme allomancer
 
   let $LANG="en_US.UTF-8"
 
@@ -291,6 +293,7 @@ nmap <leader>$ :blast<CR>
 
 " Tabs
 nmap <leader>t :tabnew<CR>
+nmap <leader>N :tabnew<CR>
 nmap <leader>L :tabnext<CR>
 nmap <leader>H :tabprevious<CR>
 nmap <leader>X :tabclose<CR>
@@ -511,4 +514,3 @@ function! CopyMatches(reg)
   execute 'let @'.reg.' = join(hits, "\n") . "\n"'
 endfunction
 command! -register CopyMatches call CopyMatches(<q-reg>)
-
